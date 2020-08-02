@@ -1,6 +1,6 @@
 *.a
-*.img
 *.o
 *.elf
 boot/mkbootimg/mkbootimg
+/*.img
 **/zig-cache/*
