@@ -33,5 +33,5 @@ qemu_aarch64: nobloat_aarch64.img
 clean:
 	rm -rf zig-cache
 	rm -f boot/initrd/sys/kernel.elf
-	rm -f boot/nobloat_x86_64.img
-	rm -f boot/nobloat_aarch64.img
+	rm -f nobloat_x86_64.img
+	rm -f nobloat_aarch64.img
