@@ -3,4 +3,4 @@
 *.o
 *.elf
 boot/mkbootimg/mkbootimg
-/zig-cache/*
+**/zig-cache/*
