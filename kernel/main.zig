@@ -1,5 +1,7 @@
 
 
-pub fn main() !void {
-
+pub export fn _start() void {
+  while(true) {
+    
+  }
 }
