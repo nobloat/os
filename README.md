@@ -4,6 +4,8 @@
 - Learn operating system development
 - Avoid C and evaluate how good [Zig](https://ziglang.org/) is suited for this task
 - Favor simplicity over performance
+- Run on x86_64 and aarch64
+- Avoid legacy, assume we are in year 2020
 
 
 ## Long term goals
