@@ -34,3 +34,32 @@ pub const FrameBuffer = struct {
         }
     }
 };
+
+const expect = @import("std").testing.expect;
+
+test "pixel conversion" {
+    const width = 320;
+    const height = 240;
+    const scanLine = width * 4;
+    var frameBuffer: [width * height]u32 = undefined;
+
+    var fb = FrameBuffer{
+        .address = @ptrCast(*u32, &frameBuffer),
+        .width = width,
+        .height = height,
+        .scanLine = scanLine,
+        .size = width * height * 4,
+        .colorEncoding = FrameBufferType.RGBA,
+    };
+
+    expect(fb.getColor(0, 0xff, 0, 0) == 0xff000000);
+    expect(fb.getColor(0, 0, 0xff, 0) == 0x00ff0000);
+    expect(fb.getColor(0, 0, 0, 0xff) == 0x0000ff00);
+    expect(fb.getColor(0xff, 0, 0, 0xff) == 0x0000ffff);
+
+    fb.colorEncoding = FrameBufferType.ABGR;
+    expect(fb.getColor(0, 0xff, 0, 0) == 0x000000ff);
+    expect(fb.getColor(0, 0, 0xff, 0) == 0x0000ff00);
+    expect(fb.getColor(0, 0, 0, 0xff) == 0x00ff0000);
+    expect(fb.getColor(0xff, 0, 0, 0xff) == 0xffff0000);
+}
