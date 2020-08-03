@@ -13,6 +13,19 @@
 - Desktop UI
 - Sound
 
+
+## Dependencies
+- `make`
+- Optionally: `zig`, if no zig is found, make will download it.
+- Optionally: `qemu-system-x86_64` or `qemu-system-aarch64` to run the OS
+
+## Build
+- make
+
+## Run
+- `make qemu_x86_64`
+- `make qemu_aarch64`
+
 ## Ressources
 - https://gitlab.com/bztsrc/bootboot/
 - https://intermezzos.github.io/book/first-edition/preface.html
@@ -21,5 +34,4 @@
 - https://wiki.osdev.org/Main_Page
 - https://github.com/jzck/kernel-zig
 - https://github.com/AndreaOrru/zen
-
 - https://github.com/longld/peda
