@@ -1,0 +1,7 @@
+jobs:
+  build:
+    docker:
+      - image: nobloat/os:latest
+    steps:
+      - checkout
+      - run: make
