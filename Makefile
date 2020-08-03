@@ -16,6 +16,9 @@ else
 	ln -sf $(shell which zig) zig
 endif
 
+test:
+	zig test kernel/framebuffer.zig
+
 #mkbootimg
  boot/mkbootimg/mkbootimg: $(shell find . -name "boot/mkbootimg/*.*")
 	cd boot/mkbootimg && make
