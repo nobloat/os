@@ -1,6 +1,7 @@
 const boot = @import("bootboot.zig");
 const FrameBuffer = @import("framebuffer.zig").FrameBuffer;
 const FrameBufferType = @import("framebuffer.zig").FrameBufferType;
+const PSFont = @import("psfont.zig").PSFont;
 
 export fn _start() noreturn {
     const frameBuffer = FrameBuffer{
@@ -16,6 +17,12 @@ export fn _start() noreturn {
     var y: u32 = 0;
 
     while (y < frameBuffer.height) : (y += 1) {
+        frameBuffer.setPixel(x, y, frameBuffer.getColor(0, 0, 0xff, 0));
+    }
+
+    x = 0;
+    y = frameBuffer.height / 2;
+    while (x < frameBuffer.width) : (x += 1) {
         frameBuffer.setPixel(x, y, frameBuffer.getColor(0, 0, 0xff, 0));
     }
 
