@@ -8,3 +8,4 @@
 - [ ] Understand linker.ld script
 
 # Bugs
+- Alignment is different 0x1000 vs 0x1

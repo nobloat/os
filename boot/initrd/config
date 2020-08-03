@@ -1,4 +1,4 @@
 // BOOTBOOT loader configuration
 
 screen=1920x1080
-kernel=sys/mykernel.x86_64.elf
+kernel=sys/kernel.elf

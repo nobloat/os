@@ -76,4 +76,4 @@ pub const Bootboot =  extern struct {
   mmap: Mmap
 };
 
-pub extern var bootboot : *Bootboot = undefined;
+pub extern var bootboot : Bootboot = undefined;

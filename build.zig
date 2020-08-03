@@ -18,7 +18,7 @@ pub fn buildX8664(b: *Builder) void {
     const kernel = b.addExecutable("kernel-x86_64.elf", "kernel/main.zig");
 
     kernel.setBuildMode(builtin.Mode.ReleaseSmall);
-    kernel.strip = true;
+
 
     kernel.setTarget(CrossTarget {
      .cpu_arch = std.Target.Cpu.Arch.x86_64,
@@ -35,7 +35,6 @@ pub fn buildAarch64(b: *Builder) void {
     const kernel = b.addExecutable("kernel-aarch64.elf", "kernel/main.zig");
 
     kernel.setBuildMode(builtin.Mode.ReleaseSmall);
-    kernel.strip = true;
 
     kernel.setTarget(CrossTarget {
      .cpu_arch = std.Target.Cpu.Arch.aarch64,
