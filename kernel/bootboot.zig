@@ -35,15 +35,11 @@ const Mmap = extern struct {
 };
 
 pub const FrameBuffer = extern struct {
-    address: *u32,
-    size: u32,
-    width: u32,
-    height: u32,
-    scanLine: u32
+    address: *u32, size: u32, width: u32, height: u32, scanLine: u32
 };
 
 pub const Bootboot = extern struct {
-    magic: [4]u8, size: u32, protocol: u8, fbType: u8, numcores: u16, bspId: u16, timezone: i16, datetime: [8]u8, initrdAddress: u64, initrdSize: u64, frameBuffer : FrameBuffer, specific: ArchSpecific, mmap: Mmap
+    magic: [4]u8, size: u32, protocol: u8, fbType: u8, numcores: u16, bspId: u16, timezone: i16, datetime: [8]u8, initrdAddress: u64, initrdSize: u64, frameBuffer: FrameBuffer, specific: ArchSpecific, mmap: Mmap
 };
 
 pub extern var bootboot: Bootboot = undefined;

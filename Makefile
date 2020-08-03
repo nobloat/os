@@ -1,10 +1,14 @@
-all: nobloat_x86_64.img nobloat_aarch64.img
-
 KERNEL_SOURCES = $(shell find . -name "*.zig")
 
+all: nobloat_x86_64.img nobloat_aarch64.img
 
 #Kernel
-%.elf: $(KERNEL_SOURCES)
+zig-cache/bin/kernel-x86_64.elf: $(KERNEL_SOURCES)
+	zig fmt .
+	zig build
+
+zig-cache/bin/kernel-aarch64.elf: $(KERNEL_SOURCES)
+	zig fmt .
 	zig build
 
 nobloat_x86_64.img: zig-cache/bin/kernel-x86_64.elf boot/initrd/config boot/initrd/sys/mykernel.x86_64.elf boot/mkbootimg.json
