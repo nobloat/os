@@ -1,5 +1,5 @@
 ZIG_VERSION = "zig-linux-x86_64-0.6.0+6123201f0"
-KERNEL_SOURCES = $(shell find . -not -d $(ZIG_VERSION) -name "*.zig")
+KERNEL_SOURCES = $(shell find . -name "*.zig" | grep -v $(ZIG_VERSION))
 ZIG = ./zig
 
 all: zig nobloat_x86_64.img nobloat_aarch64.img
@@ -16,6 +16,10 @@ else
 	ln -sf $(shell which zig) zig
 endif
 
+#mkbootimg
+ boot/mkbootimg/mkbootimg: $(shell find . -name "boot/mkbootimg/*.*")
+	cd boot/mkbootimg && make
+
 #Kernel
 zig-cache/bin/kernel-x86_64.elf: $(KERNEL_SOURCES)
 	$(ZIG) fmt kernel/
@@ -25,17 +29,17 @@ zig-cache/bin/kernel-aarch64.elf: $(KERNEL_SOURCES)
 	$(ZIG) fmt kernel/
 	$(ZIG) build
 
-nobloat_x86_64.img: zig-cache/bin/kernel-x86_64.elf boot/initrd/config boot/initrd/sys/mykernel.x86_64.elf boot/mkbootimg.json
+nobloat_x86_64.img: boot/mkbootimg/mkbootimg zig-cache/bin/kernel-x86_64.elf boot/initrd/config boot/initrd/sys/mykernel.x86_64.elf boot/mkbootimg.json
 	mkdir -p boot/initrd/sys
 	#strip -s -K mmio -K fb -K bootboot -K environment $<
 	cp $< boot/initrd/sys/kernel.elf
-	cd boot && ./mkbootimg mkbootimg.json ../$@
+	cd boot && ./mkbootimg/mkbootimg mkbootimg.json $@
 
-nobloat_aarch64.img: zig-cache/bin/kernel-aarch64.elf boot/initrd/config boot/mkbootimg.json
+nobloat_aarch64.img: boot/mkbootimg/mkbootimg zig-cache/bin/kernel-aarch64.elf boot/initrd/config boot/mkbootimg.json
 	mkdir -p boot/initrd/sys
 	#strip -s -K mmio -K fb -K bootboot -K environment $<
 	cp $< boot/initrd/sys/kernel.elf
-	cd boot && ./mkbootimg mkbootimg.json ../$@
+	cd boot && ./mkbootimg/mkbootimg mkbootimg.json $@
 
 
 qemu_x86_64: nobloat_x86_64.img
@@ -53,3 +57,4 @@ clean:
 	rm -f nobloat_x86_64.img
 	rm -f nobloat_aarch64.img
 	rm -rf zig*
+	cd boot/mkbootimg && make clean
