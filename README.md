@@ -1,5 +1,7 @@
 # nobloat-os
 
+[![CircleCI](https://circleci.com/gh/nobloat/os.svg?style=svg)](https://circleci.com/gh/nobloat)
+
 ## Goal
 - Learn operating system development
 - Avoid C and evaluate how good [Zig](https://ziglang.org/) is suited for this task
