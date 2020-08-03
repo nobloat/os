@@ -7,6 +7,8 @@
 - [ ] Add bitmap font for kernel `puts()`
 - [ ] Setup CI
 - [ ] Understand linker.ld script
+- [ ] Add basic testsuite for Framebuffer and bootboot headers
+- [ ] Add integration test where the kernel is executed in qemu and shoult shoutdown if everything was successful
 - [ ] Maybe translate the bootboot code to Zig and also build it from source
 
 # Bugs
