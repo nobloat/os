@@ -9,7 +9,7 @@ ifeq (, $(shell which zig))
 	@echo "Zig not found, downloading it now"
 	wget "https://ziglang.org/builds/$(ZIG_VERSION).tar.xz"
 	tar -xf $(ZIG_VERSION).tar.xz $(ZIG_VERSION)
-	ln -sf $(ZIG_VERSION)/zig zig
+	ln -f $(ZIG_VERSION)/zig zig
 	rm -f $(ZIG_VERSION).tar.xz
 else
 	@echo "Found version zig $(shell zig version)"

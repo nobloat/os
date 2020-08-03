@@ -5,4 +5,5 @@ jobs:
       - image: nobloat/os:latest
     steps:
       - checkout
+      - run: ls -laR
       - run: make
