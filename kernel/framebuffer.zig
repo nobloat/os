@@ -17,7 +17,7 @@ pub const FrameBuffer = struct {
     colorEncoding: FrameBufferType,
 
     pub fn setPixel(self: FrameBuffer, x: u32, y: u32, color: Color) void {
-        var offset: u32 = (self.height - y) * self.scanLine + 4 * x;
+        var offset: u32 = y * self.scanLine + 4 * (x);
         @intToPtr(*u32, @ptrToInt(self.address) + offset).* = color;
     }
 

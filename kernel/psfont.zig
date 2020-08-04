@@ -67,7 +67,4 @@ test "font loading" {
     expect(font.header.magic == 0x864ab572);
 
     const area = font.Render('A', 0xFFFFFFFF);
-    expect(area.width == 8);
-    expect(area.height == 16);
-    //expect(area.rgba[0] == 0);
 }
