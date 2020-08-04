@@ -17,7 +17,7 @@ else
 endif
 
 test:
-	zig test kernel/framebuffer.zig
+	zig build test
 
 #mkbootimg
  boot/mkbootimg/mkbootimg: $(shell find . -name "boot/mkbootimg/*.*")

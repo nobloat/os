@@ -7,7 +7,7 @@ const CrossTarget = @import("std").zig.CrossTarget;
 const Target = @import("std").zig.Target;
 
 pub fn build(b: *Builder) void {
-    const mode = b.standardReleaseOptions();
+    const buildMode = b.standardReleaseOptions();
 
     const kernel_x86_64 = b.addExecutable("kernel-x86_64.elf", "kernel/main.zig");
     const kernel_aarch_64 = b.addExecutable("kernel-aarch64.elf", "kernel/main.zig");
@@ -29,4 +29,11 @@ pub fn build(b: *Builder) void {
 
     b.default_step.dependOn(&kernel_x86_64.step);
     b.default_step.dependOn(&kernel_aarch_64.step);
+
+    const test_step = b.step("test", "Run tests");
+    const unit_tests = b.addTest("test.zig");
+    unit_tests.setBuildMode(buildMode);
+    unit_tests.setMainPkgPath(".");
+    unit_tests.setOutputDir("fooo");
+    test_step.dependOn(&unit_tests.step);
 }

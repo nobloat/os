@@ -22,12 +22,15 @@ pub const PSFont = struct {
         return PSFont{ .header = fontHeader.*, .glyphs = x };
     }
 
-    pub fn GetGlyph(self: PSFont, character: u8, ) *u8 {
-        return @intToPtr(*u8, @ptrToInt(self.glyphs) + character*self.header.bytesPerGlyph);
+    pub fn GetGlyph(
+        self: PSFont,
+        character: u8,
+    ) *u8 {
+        return @intToPtr(*u8, @ptrToInt(self.glyphs) + character * self.header.bytesPerGlyph);
     }
 
     pub fn Render(self: PSFont, character: u8, target: *u8) void {
-        assert(target.len == self.header.width * self.header.height);
+        assert(target.len == self.header.width * self.header.height / 8);
         @memcpy(target, self.GetGlyph(character), self.header.bytesPerGlyph);
     }
 };

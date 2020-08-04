@@ -17,7 +17,7 @@ export fn _start() noreturn {
     var y: u32 = 0;
 
     while (y < frameBuffer.height) : (y += 1) {
-        frameBuffer.setPixel(x, y, frameBuffer.getColor(0, 0, 0xff, 0));
+        frameBuffer.setPixel(x, y, frameBuffer.getColor(0, 0, 0, 0xff));
     }
 
     x = 0;

@@ -36,4 +36,5 @@
 - https://wiki.osdev.org/Main_Page
 - https://github.com/jzck/kernel-zig
 - https://github.com/AndreaOrru/zen
+- https://github.com/ZystemOS/pluto
 - https://github.com/longld/peda
