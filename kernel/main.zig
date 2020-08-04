@@ -21,6 +21,7 @@ export fn _start() noreturn {
 
     const blue = frameBuffer.getColor(0, 0, 0, 0xff);
     const green = frameBuffer.getColor(0, 0, 0xff, 0);
+    const red = frameBuffer.getColor(0, 0xff, 0, 0);
 
     while (y < frameBuffer.height) : (y += 1) {
         frameBuffer.setPixel(x, y, blue);
@@ -39,6 +40,8 @@ export fn _start() noreturn {
     const render = Renderer{ .framebuffer = frameBuffer };
     render.fillRectangle(200, 200, 50, 50, blue);
     render.drawRectangle(400, 400, 50, 50, red);
+    render.drawRectangle(500, 400, 50, 50, green);
+    render.drawRectangle(600, 400, 50, 50, blue);
 
     while (true) {}
 }

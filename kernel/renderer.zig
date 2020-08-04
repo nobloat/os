@@ -19,8 +19,6 @@ pub const Renderer = struct {
             self.framebuffer.setPixel(x + offsetX, y + height, color);
         }
 
-        offsetX = 0;
-        offsetY = 0;
         while (offsetY < height) : (offsetY += 1) {
             self.framebuffer.setPixel(x, y, color);
             self.framebuffer.setPixel(x + width, y, color);
