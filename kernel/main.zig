@@ -2,6 +2,7 @@ const boot = @import("bootboot.zig");
 const FrameBuffer = @import("framebuffer.zig").FrameBuffer;
 const FrameBufferType = @import("framebuffer.zig").FrameBufferType;
 const PSFont = @import("psfont.zig").PSFont;
+const DefaultFont = @import("psfont.zig").DefaultFont;
 
 export fn _start() noreturn {
     const frameBuffer = FrameBuffer{
@@ -25,6 +26,12 @@ export fn _start() noreturn {
     while (x < frameBuffer.width) : (x += 1) {
         frameBuffer.setPixel(x, y, frameBuffer.getColor(0, 0, 0xff, 0));
     }
+
+    const font = PSFont.Init(DefaultFont);
+
+    const area = font.Render('A', frameBuffer.getColor(0, 0xFF, 0xff, 0xFF));
+    //frameBuffer.setPixel(x, y, frameBuffer.getColor(0, 0xFF, 0xFF, 0xFF));
+    frameBuffer.drawArea(100, 100, area);
 
     while (true) {}
 }
