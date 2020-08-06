@@ -4,10 +4,6 @@ pub const FrameBufferType = enum(u8) {
 
 pub const Color = u32;
 
-pub const PixelArea = struct {
-    width: u32, height: u32, rgba: [128]u32
-};
-
 pub const Position = struct {
     x: u32,
     y: u32,
@@ -51,17 +47,6 @@ pub const FrameBuffer = struct {
             .BGRA => {
                 return @intCast(u32, blue) << 24 | @intCast(u32, green) << 16 | @intCast(u32, red) << 8 | @intCast(u32, alpha);
             },
-        }
-    }
-
-    pub fn drawArea(self: FrameBuffer, x: u32, y: u32, area: PixelArea) void {
-        var relativeX: u32 = 0;
-        var relativeY: u32 = 0;
-        while (relativeY < area.height) : (relativeY += 1) {
-            while (relativeX < area.width) : (relativeX += 1) {
-                self.setPixel(x + relativeX, y + relativeY, area.rgba[y * area.width + x]);
-            }
-            relativeX = 0;
         }
     }
 };
