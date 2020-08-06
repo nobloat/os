@@ -52,8 +52,5 @@ const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 
 test "font loading" {
-    const font = PSFont.Init(DefaultFont);
-    expect(font.header.magic == 0x864ab572);
-
-    const area = font.Render('A', 0xFFFFFFFF);
+    expect(DefaultFont.header.magic == 0x864ab572);
 }
