@@ -1,42 +1,45 @@
 const FrameBuffer = @import("framebuffer.zig").FrameBuffer;
 const PixelArea = @import("framebuffer.zig").PixelArea;
+const Position = @import("framebuffer.zig").Position;
 const Color = @import("framebuffer.zig").Color;
 
 const assert = @import("std").debug.assert;
 
+pub const Direction = enum {
+    Horizontal, Vertical
+};
+
 pub const Renderer = struct {
     framebuffer: FrameBuffer,
 
-    pub fn drawRectangle(self: Renderer, x: u32, y: u32, width: u32, height: u32, color: Color) void {
-        assert(x + width < self.framebuffer.width);
-        assert(y + height < self.framebuffer.height);
+    pub fn drawRectangle(self: Renderer, topLeft: Position, width: u32, height: u32, color: Color) void {
+        self.drawLine(topLeft, width, Direction.Horizontal, color);
+        self.drawLine(topLeft, height, Direction.Vertical, color);
+        self.drawLine(topLeft.offsetY(height), width, Direction.Horizontal, color);
+        self.drawLine(topLeft.offsetX(width), height, Direction.Vertical, color);
+    }
 
-        var offsetX: u32 = 0;
-        var offsetY: u32 = 0;
-
-        while (offsetX < width) : (offsetX += 1) {
-            self.framebuffer.setPixel(x + offsetX, y, color);
-            self.framebuffer.setPixel(x + offsetX, y + height, color);
-        }
-
-        while (offsetY < height) : (offsetY += 1) {
-            self.framebuffer.setPixel(x, y, color);
-            self.framebuffer.setPixel(x + width, y, color);
+    pub inline fn drawLine(self: Renderer, start: Position, length: u32, direction: Direction, color: Color) void {
+        switch (direction) {
+            .Horizontal => {
+                var x = start.x;
+                while (x < start.x + length) : (x += 1) {
+                    self.framebuffer.setPixel(x, start.y, color);
+                }
+            },
+            .Vertical => {
+                var y = start.y;
+                while (y < start.y + length) : (y += 1) {
+                    self.framebuffer.setPixel(start.x, y, color);
+                }
+            },
         }
     }
 
-    pub fn fillRectangle(self: Renderer, x: u32, y: u32, width: u32, height: u32, color: Color) void {
-        assert(x + width < self.framebuffer.width);
-        assert(y + height < self.framebuffer.height);
-
-        var offsetX: u32 = 0;
-        var offsetY: u32 = 0;
-
-        while (offsetX < width) : (offsetX += 1) {
-            while (offsetY < height) : (offsetY += 1) {
-                self.framebuffer.setPixel(x, y, color);
-            }
-            offsetY = 0;
+    pub fn fillRectangle(self: Renderer, topLeft: Position, width: u32, height: u32, color: Color) void {
+        var y: u32 = 0;
+        while (y < height) : (y += 1) {
+            self.drawLine(topLeft.offsetY(y), width, Direction.Horizontal, color);
         }
     }
 };

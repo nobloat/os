@@ -39,3 +39,4 @@
 - https://github.com/ZystemOS/pluto
 - https://github.com/longld/peda
 - https://wiki.osdev.org/PC_Screen_Font
+- https://gitlab.com/bztsrc/scalable-font2

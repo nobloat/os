@@ -18,13 +18,12 @@ pub const Fontsize = 8 * 16;
 
 pub const PSFont = struct {
     header: PSFontHeader,
-    glyphs: [*]u8,
+    glyphs: []u8,
 
     pub fn Init(binary: []const u8) PSFont {
         var fontHeader = @ptrCast(*const PSFontHeader, binary);
         var x: [*]u8 = @intToPtr([*]u8, @ptrToInt(&binary) + fontHeader.headerSize);
-
-        return PSFont{ .header = fontHeader.*, .glyphs = x };
+        return PSFont{ .header = fontHeader.*, .glyphs = x[0 .. fontHeader.glyphCount - 1] };
     }
 
     pub fn GetGlyph(self: PSFont, character: u8) []u8 {

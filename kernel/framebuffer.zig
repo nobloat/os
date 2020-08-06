@@ -8,6 +8,23 @@ pub const PixelArea = struct {
     width: u32, height: u32, rgba: [128]u32
 };
 
+pub const Position = struct {
+    x: u32,
+    y: u32,
+
+    pub inline fn offsetX(self: Position, x: u32) Position {
+        return .{ .x = self.x + x, .y = self.y };
+    }
+
+    pub inline fn offsetY(self: Position, y: u32) Position {
+        return .{ .x = self.x, .y = self.y + y };
+    }
+
+    pub inline fn offsetXY(self: Position, x: u32, y: u32) Position {
+        return .{ .x = self.x + x, .y = self.y + y };
+    }
+};
+
 pub const FrameBuffer = struct {
     address: *u32,
     size: u32,
@@ -16,9 +33,8 @@ pub const FrameBuffer = struct {
     scanLine: u32,
     colorEncoding: FrameBufferType,
 
-    pub fn setPixel(self: FrameBuffer, x: u32, y: u32, color: Color) void {
-        var offset: u32 = y * self.scanLine + 4 * (x);
-        @intToPtr(*u32, @ptrToInt(self.address) + offset).* = color;
+    pub inline fn setPixel(self: FrameBuffer, x: u32, y: u32, color: Color) void {
+        @intToPtr(*u32, @ptrToInt(self.address) + y * self.scanLine + 4 * x).* = color;
     }
 
     pub fn getColor(self: FrameBuffer, alpha: u8, red: u8, green: u8, blue: u8) Color {

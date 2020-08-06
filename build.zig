@@ -14,7 +14,7 @@ pub fn build(b: *Builder) void {
     const kernels = [_]*LibExeObjStep{ kernel_aarch_64, kernel_x86_64 };
 
     for (kernels) |k| {
-        k.setBuildMode(builtin.Mode.ReleaseSmall);
+        k.setBuildMode(b.standardReleaseOptions());
         k.setLinkerScriptPath("kernel/link.ld");
         k.setTarget(CrossTarget{
             .cpu_arch = std.Target.Cpu.Arch.aarch64,

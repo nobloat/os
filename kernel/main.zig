@@ -1,13 +1,20 @@
 const boot = @import("bootboot.zig");
 const FrameBuffer = @import("framebuffer.zig").FrameBuffer;
+const Position = @import("framebuffer.zig").Position;
 const Color = @import("framebuffer.zig").Color;
 const FrameBufferType = @import("framebuffer.zig").FrameBufferType;
 const PSFont = @import("psfont.zig").PSFont;
 const DefaultFont = @import("psfont.zig").DefaultFont;
 const Renderer = @import("renderer.zig").Renderer;
+const Direction = @import("renderer.zig").Direction;
 
 export fn _start() noreturn {
-    const frameBuffer = FrameBuffer{
+    kmain();
+    while (true) {}
+}
+
+fn kmain() void {
+    var frameBuffer = FrameBuffer{
         .address = boot.bootboot.frameBuffer.address,
         .size = boot.bootboot.frameBuffer.size,
         .width = boot.bootboot.frameBuffer.width,
@@ -23,27 +30,23 @@ export fn _start() noreturn {
     const green = frameBuffer.getColor(0, 0, 0xff, 0);
     const red = frameBuffer.getColor(0, 0xff, 0, 0);
 
-    while (y < frameBuffer.height) : (y += 1) {
-        frameBuffer.setPixel(x, y, blue);
-    }
-
-    x = 0;
-    y = frameBuffer.height / 2;
-    while (x < frameBuffer.width) : (x += 1) {
-        frameBuffer.setPixel(x, y, green);
-    }
-
     const font = PSFont.Init(DefaultFont);
 
-    puts(frameBuffer, font, "P P P P P P P", green);
+    //puts(frameBuffer, font, "P P P P P P P", green);
 
     const render = Renderer{ .framebuffer = frameBuffer };
-    render.fillRectangle(200, 200, 50, 50, blue);
-    render.drawRectangle(400, 400, 50, 50, red);
-    render.drawRectangle(500, 400, 50, 50, green);
-    render.drawRectangle(600, 400, 50, 50, blue);
 
-    while (true) {}
+    //render.fillRectangle(200, 200, 50, 50, blue);
+    const topLeft: Position = .{ .x = 100, .y = 50 };
+    const width = 100;
+    const height = 100;
+    render.drawRectangle(topLeft, width, height, red);
+    render.drawRectangle(topLeft.offsetX(2 * width), width, height, green);
+    render.drawRectangle(topLeft.offsetX(4 * width), width, height, blue);
+
+    render.fillRectangle(topLeft.offsetY(500), width, height, red);
+    render.fillRectangle(topLeft.offsetY(500).offsetX(2 * width), width, height, green);
+    render.fillRectangle(topLeft.offsetY(500).offsetX(4 * width), width, height, blue);
 }
 
 fn puts(frameBuffer: FrameBuffer, font: PSFont, string: []const u8, color: Color) void {
