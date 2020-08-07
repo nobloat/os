@@ -78,7 +78,6 @@ test "font rendering" {
             expect(Framebuffer.TestFrameBuffer.getPixel(0, 0) == 0x00000000);
         }
     }
-
     x = 0;
     y = 13;
     while (x < 8) : (x += 1) {
