@@ -8,34 +8,39 @@ pub const Direction = enum {
     Horizontal, Vertical
 };
 
+const stdout = @import("std").io.getStdOut().writer();
+
+//TODO: Move to framebuffer and rename to BufferWindow
 pub const RenderTarget = struct {
     frameBuffer: *FrameBuffer,
     topLeft: Position,
     width: u32,
     height: u32,
 
-    pub inline fn setPixel(self: RenderTarget, x: u32, y: u32, color: Color) void {
+    pub inline fn setPixel(self: *RenderTarget, x: u32, y: u32, color: Color) void {
+        //_ = stdout.print("Set Pixel w/o Offset {}/{} = {}\n", .{ x, y, color }) catch unreachable;
         self.frameBuffer.setPixel(topLeft.x + x, topLeft.y + y, color);
     }
 
-    pub inline fn setPixelAtOffset(self: RenderTarget, offset: u32, color: Color) void {
+    pub inline fn setPixelAtOffset(self: *RenderTarget, offset: u32, color: Color) void {
         var y = offset / self.width;
         var x = offset % self.width;
-        self.frameBuffer.setPixel(self.topLeft.x + x, self.topLeft.y, color);
+        //_ = stdout.print("Set Pixel with Offset at Render Target {} = {}\n", .{ offset, color }) catch unreachable;
+        self.frameBuffer.setPixel(self.topLeft.x + x, self.topLeft.y + y, color);
     }
 };
 
 pub const Renderer = struct {
     framebuffer: FrameBuffer,
 
-    pub fn drawRectangle(self: Renderer, topLeft: Position, width: u32, height: u32, color: Color) void {
+    pub fn drawRectangle(self: *Renderer, topLeft: Position, width: u32, height: u32, color: Color) void {
         self.drawLine(topLeft, width, Direction.Horizontal, color);
         self.drawLine(topLeft, height, Direction.Vertical, color);
         self.drawLine(topLeft.offsetY(height), width, Direction.Horizontal, color);
         self.drawLine(topLeft.offsetX(width), height, Direction.Vertical, color);
     }
 
-    pub inline fn drawLine(self: Renderer, start: Position, length: u32, direction: Direction, color: Color) void {
+    pub inline fn drawLine(self: *Renderer, start: Position, length: u32, direction: Direction, color: Color) void {
         switch (direction) {
             .Horizontal => {
                 var x = start.x;
@@ -52,7 +57,7 @@ pub const Renderer = struct {
         }
     }
 
-    pub fn fillRectangle(self: Renderer, topLeft: Position, width: u32, height: u32, color: Color) void {
+    pub fn fillRectangle(self: *Renderer, topLeft: Position, width: u32, height: u32, color: Color) void {
         var y: u32 = 0;
         while (y < height) : (y += 1) {
             self.drawLine(topLeft.offsetY(y), width, Direction.Horizontal, color);

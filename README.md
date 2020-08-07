@@ -28,6 +28,10 @@
 - `make qemu_x86_64`
 - `make qemu_aarch64`
 
+### WSL2 with XcSvr
+- Elevated powershell: `Set-NetFirewallProfile -DisabledInterfaceAliases "vEthernet (WSL)"`
+
+
 ## Ressources
 - https://gitlab.com/bztsrc/bootboot/
 - https://intermezzos.github.io/book/first-edition/preface.html
@@ -39,4 +43,4 @@
 - https://github.com/ZystemOS/pluto
 - https://github.com/longld/peda
 - https://wiki.osdev.org/PC_Screen_Font
-- https://gitlab.com/bztsrc/scalable-font2
+- https://gitlab.com/bztsrc/scalable-font2l
