@@ -19,6 +19,7 @@ export fn _start() void {
         .scanLine = boot.bootboot.frameBuffer.scanLine,
         .colorEncoding = @intToEnum(FrameBufferType, boot.bootboot.fbType),
     };
+    ArchFunctions.suspendMultiCores();
     kmain(&boot.bootboot, frameBuffer);
     ArchFunctions.halt();
 }
@@ -44,7 +45,7 @@ fn kmain(bootHeader: *boot.Bootboot, frameBuffer: FrameBuffer) void {
     render.fillRectangle(topLeft.offsetY(100).offsetX(3 * width), width, height, green);
     render.fillRectangle(topLeft.offsetY(100).offsetX(5 * width), width, height, violet);
 
-    //puts(&render, DefaultFont, "][ nobloat/os -> https://github.com/nobloat/os", violet);
+    puts(&render, DefaultFont, "][ nobloat/os -> https://github.com/nobloat/os", violet);
 
     var buff = [_]u8{0} ** (200);
     _ = fmt.bufPrint(buff[0..], "Cores: {}, BSP-ID: {}, TimeZone: (GMT {}), Init-Ramdisk Size: {} ", .{ bootHeader.numcores, bootHeader.bspId, bootHeader.timezone, bootHeader.initrdSize }) catch unreachable;

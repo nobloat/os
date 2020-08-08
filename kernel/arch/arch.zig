@@ -12,4 +12,7 @@ const import = switch (std.Target.current.cpu.arch) {
     },
 };
 
-pub const ArchFunctions = .{ .halt = import.halt };
+pub const ArchFunctions = .{
+    .halt = import.halt,
+    .suspendMultiCores = import.suspendMultiCores,
+};

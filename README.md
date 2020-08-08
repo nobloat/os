@@ -44,3 +44,4 @@
 - https://github.com/longld/peda
 - https://wiki.osdev.org/PC_Screen_Font
 - https://gitlab.com/bztsrc/scalable-font2l
+- https://0xax.gitbooks.io/linux-insides/content/Booting/linux-bootstrap-1.html

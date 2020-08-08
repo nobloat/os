@@ -7,6 +7,7 @@
 - [x] Add bitmap font for kernel `puts()`
 - [x] Setup CI
 - [ ] Understand paging
+- [ ] Fix multicore crash (smp support)
 - [ ] Setup an allocator for kernel memory
 - [ ] Handle hardware interrupts
 - [ ] Add keyboard support via PS/2
