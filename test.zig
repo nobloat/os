@@ -3,4 +3,5 @@ test "main" {
   _ = @import("kernel/framebuffer.zig");
   _ = @import("kernel/renderer.zig");
   _ = @import("kernel/psfont.zig");
+  _ = @import("kernel/config.zig");
 }

@@ -7,8 +7,10 @@ const PSFont = @import("psfont.zig").PSFont;
 const DefaultFont = @import("psfont.zig").DefaultFont;
 const Renderer = @import("renderer.zig").Renderer;
 const Direction = @import("renderer.zig").Direction;
+const fmt = @import("std").fmt;
+const ArchFunctions = @import("arch/arch.zig").ArchFunctions;
 
-export fn _start() noreturn {
+export fn _start() void {
     var frameBuffer = FrameBuffer{
         .address = boot.bootboot.frameBuffer.address,
         .size = boot.bootboot.frameBuffer.size,
@@ -17,11 +19,11 @@ export fn _start() noreturn {
         .scanLine = boot.bootboot.frameBuffer.scanLine,
         .colorEncoding = @intToEnum(FrameBufferType, boot.bootboot.fbType),
     };
-    kmain(frameBuffer);
-    while (true) {}
+    kmain(&boot.bootboot, frameBuffer);
+    ArchFunctions.halt();
 }
 
-fn kmain(frameBuffer: FrameBuffer) void {
+fn kmain(bootHeader: *boot.Bootboot, frameBuffer: FrameBuffer) void {
     var render = Renderer{ .framebuffer = frameBuffer };
 
     const green = frameBuffer.getColor(0, 0x8f, 0xb5, 0x3c);
@@ -42,7 +44,11 @@ fn kmain(frameBuffer: FrameBuffer) void {
     render.fillRectangle(topLeft.offsetY(100).offsetX(3 * width), width, height, green);
     render.fillRectangle(topLeft.offsetY(100).offsetX(5 * width), width, height, violet);
 
-    puts(&render, DefaultFont, "][ nobloat/os -> https://github.com/nobloat/os", violet);
+    //puts(&render, DefaultFont, "][ nobloat/os -> https://github.com/nobloat/os", violet);
+
+    var buff = [_]u8{0} ** (200);
+    _ = fmt.bufPrint(buff[0..], "Cores: {}, BSP-ID: {}, TimeZone: (GMT {}), Init-Ramdisk Size: {} ", .{ bootHeader.numcores, bootHeader.bspId, bootHeader.timezone, bootHeader.initrdSize }) catch unreachable;
+    puts(&render, DefaultFont, buff[0..], green);
 }
 
 fn bootScreen(render: *Renderer) void {
@@ -57,6 +63,9 @@ fn puts(render: *Renderer, font: PSFont, string: []const u8, color: Color) void 
     var target = render.getTarget(.{ .x = 10, .y = 10 }, font.header.width, font.header.height);
 
     for (string) |c| {
+        if (c == 0) {
+            break;
+        }
         font.Render(&target, c, color);
         target.topLeft.x += 10;
     }
