@@ -45,3 +45,5 @@
 - https://wiki.osdev.org/PC_Screen_Font
 - https://gitlab.com/bztsrc/scalable-font2l
 - https://0xax.gitbooks.io/linux-insides/content/Booting/linux-bootstrap-1.html
+- https://github.com/cirosantilli/x86-bare-metal-examples
+- https://stackoverflow.com/questions/980999/what-does-multicore-assembly-language-look-like/33651438#33651438
