@@ -11,6 +11,9 @@ const fmt = @import("std").fmt;
 const ArchFunctions = @import("arch/arch.zig").ArchFunctions;
 
 export fn _start() void {
+    var bootId = boot.bootboot.bspId;
+    ArchFunctions.suspendMultiCores();
+
     var frameBuffer = FrameBuffer{
         .address = boot.bootboot.frameBuffer.address,
         .size = boot.bootboot.frameBuffer.size,
@@ -19,7 +22,7 @@ export fn _start() void {
         .scanLine = boot.bootboot.frameBuffer.scanLine,
         .colorEncoding = @intToEnum(FrameBufferType, boot.bootboot.fbType),
     };
-    ArchFunctions.suspendMultiCores();
+
     kmain(&boot.bootboot, frameBuffer);
     ArchFunctions.halt();
 }
