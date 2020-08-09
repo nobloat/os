@@ -46,7 +46,7 @@ nobloat_aarch64.img: zig-cache/bin/kernel-aarch64.elf boot/initrd/config boot/mk
 
 
 qemu_x86_64: nobloat_x86_64.img
-	qemu-system-x86_64 -drive file=$<,format=raw -smp 4 -serial stdio
+	qemu-system-x86_64 -drive file=$<,format=raw -device "isa-debug-exit,iobase=0xf4,iosize=0x04"  -smp 4 -serial stdio
 
 qemu_aarch64: nobloat_aarch64.img
 	qemu-system-aarch64 -M raspi3 -kernel boot/bootboot.img -drive file=$<,if=sd,format=raw -serial stdio
