@@ -9,6 +9,12 @@ pub inline fn suspendMultiCores() void {
         \\cbz x0, .bsp
         \\ wfi
         \\.bsp:
-        : : : "x0"
-        );
+        :
+        :
+        : "x0"
+    );
+}
+
+pub inline fn init() void {
+    //TODO: setup interrupts
 }

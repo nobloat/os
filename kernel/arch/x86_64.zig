@@ -16,3 +16,9 @@ pub inline fn suspendMultiCores() void {
         : "eax", "ebx"
     );
 }
+
+const idt = @import("x86_64/idt.zig");
+
+pub inline fn init() void {
+    //idt.loadIdt();
+}

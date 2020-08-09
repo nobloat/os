@@ -19,8 +19,8 @@ const expect = @import("std").testing.expect;
 
 test "config keys and values" {
     const memory = "key1=value1\nkey2=value2";
-    const c = Config{ .environment = @ptrCast([*]const u8, memory) };
+    //const c = Config{ .environment = @ptrCast([*]const u8, memory) };
 
-    c.keys();
+    //c.keys();
     //expect(c.keys() == .{"key1", "key2"});
 }

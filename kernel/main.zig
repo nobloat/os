@@ -13,6 +13,7 @@ const ArchFunctions = @import("arch/arch.zig").ArchFunctions;
 export fn _start() void {
     var bootId = boot.bootboot.bspId;
     ArchFunctions.suspendMultiCores();
+    ArchFunctions.init();
 
     var frameBuffer = FrameBuffer{
         .address = boot.bootboot.frameBuffer.address,
