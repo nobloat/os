@@ -16,8 +16,9 @@ else
 	ln -sf $(shell which zig) zig
 endif
 
-test:
+test: test_x86_64.img
 	zig build test
+	qemu-system-x86_64 -drive file=$<,format=raw -device "isa-debug-exit,iobase=0xf4,iosize=0x04"  -smp 4 -serial stdio
 
 #mkbootimg
  boot/mkbootimg/mkbootimg: $(shell find . -name "boot/mkbootimg/*.*")
@@ -31,6 +32,26 @@ zig-cache/bin/kernel-x86_64.elf: $(KERNEL_SOURCES)
 zig-cache/bin/kernel-aarch64.elf: $(KERNEL_SOURCES)
 	$(ZIG) fmt kernel/
 	$(ZIG) build
+
+zig-cache/bin/test-x86_64.elf: $(KERNEL_SOURCES)
+	$(ZIG) fmt kernel/
+	$(ZIG) build test
+
+zig-cache/bin/test-aarch64.elf: $(KERNEL_SOURCES)
+	$(ZIG) fmt kernel/
+	$(ZIG) build test
+
+test_x86_64.img: zig-cache/bin/test-x86_64.elf boot/initrd/config boot/mkbootimg.json boot/mkbootimg/mkbootimg
+	mkdir -p boot/initrd/sys
+	#strip -s -K mmio -K fb -K bootboot -K environment $<
+	cp $< boot/initrd/sys/kernel.elf
+	cd boot && ./mkbootimg/mkbootimg mkbootimg.json ../$@
+
+test_aarch64.img: zig-cache/bin/test-x86_64.elf boot/initrd/config boot/mkbootimg.json boot/mkbootimg/mkbootimg
+	mkdir -p boot/initrd/sys
+	#strip -s -K mmio -K fb -K bootboot -K environment $<
+	cp $< boot/initrd/sys/kernel.elf
+	cd boot && ./mkbootimg/mkbootimg mkbootimg.json ../$@
 
 nobloat_x86_64.img: zig-cache/bin/kernel-x86_64.elf boot/initrd/config boot/mkbootimg.json boot/mkbootimg/mkbootimg
 	mkdir -p boot/initrd/sys

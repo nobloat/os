@@ -12,7 +12,6 @@ const portio = @import("arch/x86_64/portio.zig");
 const ArchFunctions = @import("arch/arch.zig").ArchFunctions;
 
 export fn _start() void {
-
     var bootId = boot.bootboot.bspId;
     ArchFunctions.suspendMultiCores();
     ArchFunctions.init();
