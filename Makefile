@@ -9,7 +9,7 @@ ifeq (, $(shell which zig))
 	@echo "Zig not found, downloading it now"
 	wget "https://ziglang.org/builds/$(ZIG_VERSION).tar.xz"
 	tar -xf $(ZIG_VERSION).tar.xz $(ZIG_VERSION)
-	ln -f $(ZIG_VERSION)/zig zig
+	ln -sf $(ZIG_VERSION)/zig zig
 	rm -f $(ZIG_VERSION).tar.xz
 else
 	@echo "Found version zig $(shell zig version)"
@@ -76,9 +76,12 @@ debug_qemu_x86_64: nobloat_x86_64.img
 	qemu-system-x86_64 -drive file=$<,format=raw -smp 4 -serial stdio -S -s &
 	gdb zig-cache/bin/kernel-x86_64.elf -ex "target remote localhost:1234" -ex "b _start"
 
+update-docker-image: Dockerfile
+	docker build -t nobloat/os .
+	docker push nobloat/os
+
 clean:
 	rm -f boot/initrd/sys/kernel.elf
-	rm -f nobloat_x86_64.img
-	rm -f nobloat_aarch64.img
+	rm -f *.img
 	rm -rf zig*
 	cd boot/mkbootimg && make clean
