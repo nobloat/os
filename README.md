@@ -1,6 +1,6 @@
 # nobloat-os
 
-[![CircleCI](https://circleci.com/gh/nobloat/os.svg?style=svg)](https://circleci.com/gh/nobloat)
+[![CircleCI](https://circleci.com/gh/nobloat/os.svg?style=svg)](https://circleci.com/gh/nobloat/os)
 
 ## Goal
 - Learn operating system development

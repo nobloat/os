@@ -1,4 +1,4 @@
-ZIG_VERSION = "zig-linux-x86_64-0.6.0+fd4783906"
+ZIG_VERSION = "zig-linux-x86_64-0.6.0+2b28cebf6"
 KERNEL_SOURCES = $(shell find . -name "*.zig" | grep -v $(ZIG_VERSION))
 ZIG = ./zig
 

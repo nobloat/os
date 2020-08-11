@@ -13,7 +13,7 @@ pub fn build(b: *Builder) void {
     const kernel_aarch_64 = b.addExecutable("kernel-aarch64.elf", "kernel/main.zig");
     const test_x86_64 = b.addExecutable("test-x86_64.elf", "kernel/test.zig");
     const test_aarch_64 = b.addExecutable("test-aarch64.elf", "kernel/test.zig");
-    const kernels = [_]*LibExeObjStep{ kernel_aarch_64, kernel_x86_64, test_x86_64, test_aarch_64};
+    const kernels = [_]*LibExeObjStep{ kernel_aarch_64, kernel_x86_64, test_x86_64, test_aarch_64 };
 
     for (kernels) |k| {
         k.setBuildMode(b.standardReleaseOptions());
