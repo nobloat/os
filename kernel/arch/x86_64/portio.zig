@@ -7,7 +7,7 @@ pub inline fn outb(port: u16, value: u8) void {
     );
 }
 
-pub inline fn outl(port: u16, value: u32) void {
+pub fn outl(port: u16, value: u32) void {
     asm volatile ("outl %[value], %[port]"
         :
         : [value] "{eax}" (value),

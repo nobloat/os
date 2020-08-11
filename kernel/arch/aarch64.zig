@@ -15,7 +15,9 @@ pub inline fn suspendMultiCores() void {
     );
 }
 
-pub inline fn exit(status: u32) void {}
+pub fn exit(status: u32) void {
+
+}
 
 pub inline fn init() void {
     //TODO: setup interrupts

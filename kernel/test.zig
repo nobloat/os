@@ -17,5 +17,4 @@ export fn _start() void {
     ArchFunctions.suspendMultiCores();
     ArchFunctions.init();
     ArchFunctions.exit(1);
-    ArchFunctions.halt();
 }
