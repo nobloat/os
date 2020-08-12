@@ -23,9 +23,15 @@ pub const X8664Serial = struct {
     portio.outb(register(self.device, Register.LineControl), 0x003);
   }
 
+  pub fn write(self:X8664Serial, data: [] const u8) void {
+     for (data) |b| {
+      //Wait for transmission finished empty
+      while (portio.inb(0x3F8+5) & 0x20 == 0) {}
+      portio.outb(0x3F8, b);
+    }
+  }
+
   pub fn register(device: SerialDevice, reg: Register) u16 {
     return @enumToInt(device)+@enumToInt(reg);
   }
-
-
 };

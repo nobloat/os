@@ -35,10 +35,9 @@ pub inline fn init() void {
 
 pub inline fn uartWrite(data: [] const u8) void {
     uart.init();
+    uart.write(data);
 
-    for (data) |b| {
-      //Wait for transmission finished empty
-      while (portio.inb(0x3F8+5) & 0x20 == 0) {}
-      portio.outb(0x3F8, b);
-    }
+    //TODO: don't know without this line I get a linker error:
+    //lld: error: /home/cinemast/os/kernel/arch/x86_64.zig:32:(.text+0x7A): relocation R_X86_64_32 out of range: 18446744073707488680 is not in [0, 4294967295]
+    for (data) |b| {}
 }
