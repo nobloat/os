@@ -16,5 +16,6 @@ pub const ArchFunctions = .{
     .halt = import.halt,
     .init = import.init,
     .exit = import.exit,
+    .uartWrite = import.uartWrite,
     .suspendMultiCores = import.suspendMultiCores,
 };

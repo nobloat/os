@@ -16,6 +16,8 @@ export fn _start() void {
     ArchFunctions.suspendMultiCores();
     ArchFunctions.init();
 
+    ArchFunctions.uartWrite("Starting ][os...\n");
+
     var frameBuffer = FrameBuffer{
         .address = boot.bootboot.frameBuffer.address,
         .size = boot.bootboot.frameBuffer.size,

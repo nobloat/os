@@ -16,9 +16,13 @@ pub inline fn suspendMultiCores() void {
 }
 
 pub fn exit(status: u32) void {
-
+    //TODO:
 }
 
 pub inline fn init() void {
     //TODO: setup interrupts
+}
+
+pub fn uartWrite(data: [] const u8) void {
+    //TODO: uart.write(data);
 }
