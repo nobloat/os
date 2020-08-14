@@ -1,3 +1,5 @@
+//https://wiki.osdev.org/Interrupts
+//https://wiki.osdev.org/PIC#Programming_the_PIC_chips
 pub const GateType = packed enum(u4) {
     Interrupt = 0b110, Trap = 0b111, Task = 0b101
 };

@@ -34,7 +34,6 @@ pub inline fn init() void {
 }
 
 pub inline fn uartWrite(data: [] const u8) void {
-    uart.init();
     uart.write(data);
 
     //TODO: don't know without this line I get a linker error:

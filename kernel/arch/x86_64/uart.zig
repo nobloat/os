@@ -21,6 +21,7 @@ pub const X8664Serial = struct {
     portio.outb(register(self.device,Register.InterruptEnable), 0x00);
     //8 data bits 1 stop bit, no parity
     portio.outb(register(self.device, Register.LineControl), 0x003);
+    //TODO: don't ignore baudrate
   }
 
   pub fn write(self:X8664Serial, data: [] const u8) void {
