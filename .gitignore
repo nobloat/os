@@ -4,3 +4,5 @@
 boot/mkbootimg/mkbootimg
 /*.img
 /zig*
+**/zig-cache
+boot/efi_x86_64/boot.img

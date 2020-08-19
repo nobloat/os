@@ -47,3 +47,5 @@
 - https://0xax.gitbooks.io/linux-insides/content/Booting/linux-bootstrap-1.html
 - https://github.com/cirosantilli/x86-bare-metal-examples
 - https://stackoverflow.com/questions/980999/what-does-multicore-assembly-language-look-like/33651438#33651438
+- https://github.com/nrdmn/uefi-examples
+- https://kazlauskas.me/entries/x64-uefi-os-1.html
