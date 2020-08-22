@@ -14,4 +14,10 @@ pub fn build(b: *Builder) void {
     exe.setOutputDir("efi/boot");
     exe.install();
     b.default_step.dependOn(&exe.step);
+
+    const step = b.step("qemu", "run qemu");
+    const qemuStep = b.addSystemCommand(&[_][]const u8{"qemu-system-x86_64", "-bios", "ovmf-x86_64.bin", "-hdd", "fat:rw:."});
+
+    step.dependOn(&qemuStep.step);
+    step.dependOn(&exe.step);
 }
