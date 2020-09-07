@@ -1,38 +1,27 @@
-const boot = @import("bootboot.zig");
-const FrameBuffer = @import("framebuffer.zig").FrameBuffer;
-const Position = @import("framebuffer.zig").Position;
-const Color = @import("framebuffer.zig").Color;
-const FrameBufferType = @import("framebuffer.zig").FrameBufferType;
 const PSFont = @import("psfont.zig").PSFont;
+const Color = @import("board/framebuffer.zig").Color;
 const DefaultFont = @import("psfont.zig").DefaultFont;
 const Renderer = @import("renderer.zig").Renderer;
 const Direction = @import("renderer.zig").Direction;
 const fmt = @import("std").fmt;
 const portio = @import("arch/x86_64/portio.zig");
 const ArchFunctions = @import("arch/arch.zig").ArchFunctions;
+const Board = @import("board/board.zig").Board;
 
-export fn _start() void {
-    var bootId = boot.bootboot.bspId;
-    ArchFunctions.suspendMultiCores();
+pub fn main() void {
+    //ArchFunctions.suspendMultiCores();
     ArchFunctions.init();
 
     ArchFunctions.uartWrite("Starting ][os...\n");
 
-    var frameBuffer = FrameBuffer{
-        .address = boot.bootboot.frameBuffer.address,
-        .size = boot.bootboot.frameBuffer.size,
-        .width = boot.bootboot.frameBuffer.width,
-        .height = boot.bootboot.frameBuffer.height,
-        .scanLine = boot.bootboot.frameBuffer.scanLine,
-        .colorEncoding = @intToEnum(FrameBufferType, boot.bootboot.fbType),
-    };
-
-    kmain(&boot.bootboot, frameBuffer);
+    //kmain(Board.getFrameBuffer());
     ArchFunctions.halt();
+
+    Board.getFrameBuffer().fill(0,0,100,100, Color{.red = 0xff, .green = 0,.blue = 0});
 }
 
-fn kmain(bootHeader: *boot.Bootboot, frameBuffer: FrameBuffer) void {
-    var render = Renderer{ .framebuffer = frameBuffer };
+fn kmain( frameBuffer: *FrameBuffer) void {
+    var render = Renderer{ .framebuffer = frameBuffer.* };
 
     const green = frameBuffer.getColor(0, 0x8f, 0xb5, 0x3c);
     const red = frameBuffer.getColor(0, 0xe8, 0x55, 0x00);
@@ -55,8 +44,8 @@ fn kmain(bootHeader: *boot.Bootboot, frameBuffer: FrameBuffer) void {
     puts(&render, DefaultFont, "][ nobloat/os -> https://github.com/nobloat/os", violet);
 
     var buff = [_]u8{0} ** (200);
-    _ = fmt.bufPrint(buff[0..], "Cores: {}, BSP-ID: {}, TimeZone: (GMT {}), Init-Ramdisk Size: {} ", .{ bootHeader.numcores, bootHeader.bspId, bootHeader.timezone, bootHeader.initrdSize }) catch unreachable;
-    puts(&render, DefaultFont, buff[0..], green);
+    //_ = fmt.bufPrint(buff[0..], "Cores: {}, BSP-ID: {}, TimeZone: (GMT {}), Init-Ramdisk Size: {} ", .{ bootHeader.numcores, bootHeader.bspId, bootHeader.timezone, bootHeader.initrdSize }) catch unreachable;
+    //puts(&render, DefaultFont, buff[0..], green);
 }
 
 fn bootScreen(render: *Renderer) void {

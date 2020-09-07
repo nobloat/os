@@ -1,4 +1,3 @@
-const boot = @import("bootboot.zig");
 const FrameBuffer = @import("framebuffer.zig").FrameBuffer;
 const Position = @import("framebuffer.zig").Position;
 const Color = @import("framebuffer.zig").Color;
@@ -12,8 +11,7 @@ const portio = @import("arch/x86_64/portio.zig");
 const ArchFunctions = @import("arch/arch.zig").ArchFunctions;
 
 //Integration test within qemu
-export fn _start() void {
-    var bootId = boot.bootboot.bspId;
+pub fn main() void {
     ArchFunctions.suspendMultiCores();
     ArchFunctions.init();
     ArchFunctions.exit(1);

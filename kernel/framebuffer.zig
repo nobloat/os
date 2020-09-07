@@ -21,8 +21,6 @@ pub const Position = struct {
     }
 };
 
-const stdout = @import("std").io.getStdOut().writer();
-
 pub const FrameBuffer = struct {
     address: *volatile u32,
     size: u32,
@@ -32,7 +30,6 @@ pub const FrameBuffer = struct {
     colorEncoding: FrameBufferType,
 
     pub inline fn setPixel(self: FrameBuffer, x: u32, y: u32, color: Color) void {
-        //_ = stdout.print("Set Pixel in Framebuffer {}/{} = {}\n", .{ x, y, color }) catch unreachable;
         @intToPtr(*volatile u32, @ptrToInt(self.address) + y * self.scanLine + 4 * x).* = color;
     }
 
