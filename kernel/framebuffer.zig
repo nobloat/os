@@ -1,6 +1,4 @@
-pub const FrameBufferType = enum(u8) {
-    ARGB = 0, RGBA = 1, ABGR = 2, BGRA = 3
-};
+pub const FrameBufferType = enum(u8) { ARGB = 0, RGBA = 1, ABGR = 2, BGRA = 3 };
 
 pub const Color = u32;
 

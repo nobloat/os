@@ -1,4 +1,3 @@
-
 pub inline fn halt() void {
     asm volatile ("hlt");
 }
@@ -12,10 +11,7 @@ pub inline fn suspendMultiCores() void {
         \\jz .bsp
         \\  hlt
         \\.bsp:
-        :
-        :
-        : "eax", "ebx"
-    );
+        ::: "eax", "ebx");
 }
 
 const idt = @import("x86_64/idt.zig");
@@ -33,7 +29,7 @@ pub inline fn init() void {
     //idt.loadIdt();
 }
 
-pub inline fn uartWrite(data: [] const u8) void {
+pub inline fn uartWrite(data: []const u8) void {
     uart.write(data);
 
     //TODO: don't know without this line I get a linker error:

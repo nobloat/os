@@ -4,9 +4,7 @@ const Color = @import("framebuffer.zig").Color;
 
 const assert = @import("std").debug.assert;
 
-pub const Direction = enum {
-    Horizontal, Vertical
-};
+pub const Direction = enum { Horizontal, Vertical };
 
 const stdout = @import("std").io.getStdOut().writer();
 

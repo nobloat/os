@@ -6,3 +6,4 @@ boot/mkbootimg/mkbootimg
 /zig*
 **/zig-cache
 boot/efi_x86_64/efi/*
+/zls/*
