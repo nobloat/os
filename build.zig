@@ -10,19 +10,20 @@ pub fn build(b: *Builder) void {
     const buildMode = b.standardReleaseOptions();
 
     const kernel_x86_64 = b.addExecutable("kernel-x86_64.elf", "kernel/main.zig");
-    const kernel_aarch_64 = b.addExecutable("kernel-aarch64.elf", "kernel/main.zig");
+    const kernel_aarch_64 = b.addStaticLibrary("kernel-aarch64.elf", "kernel/arch/raspi3.zig");
     const test_x86_64 = b.addExecutable("test-x86_64.elf", "kernel/test.zig");
-    const test_aarch_64 = b.addExecutable("test-aarch64.elf", "kernel/test.zig");
-    const kernels = [_]*LibExeObjStep{ kernel_aarch_64, kernel_x86_64, test_x86_64, test_aarch_64 };
+    const test_aarch_64 = b.addExecutable("test-aarch64.elf", "kernel/arch/raspi3.zig");
+    const kernels = [_]*LibExeObjStep{ kernel_aarch_64};//, kernel_x86_64, test_x86_64, test_aarch_64 };
 
     for (kernels) |k| {
         k.setBuildMode(b.standardReleaseOptions());
-        k.setLinkerScriptPath("kernel/link.ld");
+        k.setLinkerScriptPath("kernel/arch/raspi3.ld");
         k.setTarget(CrossTarget{
             .cpu_arch = std.Target.Cpu.Arch.aarch64,
             .os_tag = std.Target.Os.Tag.freestanding,
             .abi = std.Target.Abi.none,
         });
+        k.addAssemblyFile("kernel/arch/raspi3.S");
         k.install();
     }
 
