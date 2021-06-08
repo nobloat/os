@@ -8,6 +8,7 @@
 - Favor simplicity over performance
 - Run on x86_64 and aarch64
 - Avoid legacy, assume we are in year 2020
+- Avoid dependencies
 
 
 ## Long term goals
@@ -50,3 +51,8 @@
 - https://github.com/nrdmn/uefi-examples
 - https://kazlauskas.me/entries/x64-uefi-os-1.html
 - https://uefi.org/sites/default/files/resources/UEFI_Spec_2_8_final.pdf
+
+- https://jsandler18.github.io/
+- https://github.com/s-matyukevich/raspberry-pi-os
+- https://github.com/bztsrc/raspi3-tutorial
+- https://isometimes.github.io/rpi4-osdev/
