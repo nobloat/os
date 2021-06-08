@@ -14,7 +14,7 @@ pub fn build(b: *std.build.Builder) void {
             .os_tag = std.Target.Os.Tag.freestanding,
             .abi = std.Target.Abi.none,
         });
-    lib.install();
+    lib.installRaw("kernel8.img");
     lib.addIncludeDir("src/");
     lib.addCSourceFile("src/uart.c", &[_][]const u8{"-Wall", "-O2" , "-ffreestanding" ,"-nostdinc" ,"-nostdlib", "-mcpu=cortex-a53+nosimd"});
     lib.setLinkerScriptPath("src/raspi3.ld");

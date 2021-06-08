@@ -14,7 +14,7 @@ export fn kmain() void {
     c.uart_init();
     
     // say hello
-    c.uart_puts("Hello Worl2222d!\n");
+    c.uart_puts("Hello World!\n");
     
     // echo everything back
     while(true) {
